@@ -7,7 +7,9 @@ ruby '2.7.0'
 gem "roo", "~> 2.8.2"
 gem 'nokogiri', '>= 1.6.6'
 # Export Excel
-gem 'rubyzip', '< 2.0.0', '>= 1.2.1'
+gem 'rubyzip', '>= 1.2.1' , '< 2.0.0'
+# gem 'rubyzip', '< 2.0.0', '>= 1.2.1' 
+# rubyzip (< 2.0.0, >= 1.2.1)
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
 gem 'faker', '>= 2.10.0'
@@ -53,6 +55,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 group :production do
   gem 'pg', '>= 0.18', '< 2.0'
   gem 'rails_12factor'
