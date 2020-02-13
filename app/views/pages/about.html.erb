@@ -1,0 +1,29 @@
+
+
+<h1>Month view of extax</h1>
+<%=
+  link_to 'Monthly View of extax',
+  pages_home_path 
+%><br/>
+
+<p>Year - <%=@yearly%> <br>   Month - <%=@monthly%></p>
+
+==================================
+<%total = 0%>
+<%tolast=0%>
+<% torrp =0%>
+<% if @items.present?%>
+ <% @items.each do |item|%>
+    <%total += item.extax_value%>
+    <%tolast += item.lastbuyprice%>
+    <%torrp += item.rrp%>
+ <%end%>
+    <p>Extax : <%=total%> </p>
+    <p>Last Buy Price : <%=tolast%></p>
+    <p>R.R.P. : <%=torrp%></p>
+
+<%else %>
+ <%="There is NO Data in this month"%> 
+
+<%end%>
+==================================

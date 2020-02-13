@@ -1,0 +1,25 @@
+
+wb = xlsx_package.workbook
+
+wb.styles do |style|
+  project_heading = style.add_style(b: true, sz: 14)
+  heading = style.add_style(b: true)
+
+  wb.add_worksheet(name: "Items") do |sheet|
+    # Add a title row
+    sheet.add_row ["Inventory Items"], style: project_heading
+    # Add the date this was downloaded
+    sheet.add_row ["Downloaded at", Time.now.strftime("%b %-d, %Y")]
+    # Add a blank row
+    # sheet.add_row []
+
+    # Create the header row
+    sheet.add_row ["ID","APN code", "R.R.P.", "Last Buy Price", "Item description", "Author", "Product Category",	"Actual Stock On Hand", "Trans Date", "Trans Time", "Trans Document Number", "Trans Reference Number", "Trans Quantity", "Trans Total extax value", "Trans Total tax", "Trans Total discount given" ], style: heading
+    # Create the database reference row
+    sheet.add_row ["id","apncode", "rrp", "lastbuyprice",	 "description", "author", "pcategory", "stock", "date", "time", "doc_num", "ref_num", "quantity", "extax_value", "tax", "discount" ], style: heading
+    # Create entries for each item
+    @items.each do |item|
+      sheet.add_row [item.id, item.apncode, item.rrp, item.lastbuyprice, item.description, item.author, item.pcategory, item.stock, item.date, item.time, item.doc_num, item.ref_num, item.quantity, item.extax_value, item.tax, item.discount]
+    end
+  end
+end
