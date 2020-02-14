@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :destroyall]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   # GET /items
   # GET /items.json
@@ -72,14 +72,13 @@ class ItemsController < ApplicationController
     end
   end
 
-    # DELETE /items
-  # DELETE /items
-  def destroyall
-    Item.destroy
+
+  def destroy_all
+    Item.destroy_all
     respond_to do |format|
       format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-      format.json { head :no_content }
     end
+
   end
 
   private
@@ -92,4 +91,5 @@ class ItemsController < ApplicationController
     def item_params
       params.require(:item).permit(:apncode, :description, :author, :pcategory, :doc_num, :ref_num, :rrp, :lastbuyprice, :extax_value, :tax, :discount, :stock, :quantity, :date, :time)
     end
+
 end

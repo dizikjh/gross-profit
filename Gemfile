@@ -8,8 +8,8 @@ gem "roo", "~> 2.8.2"
 gem 'nokogiri', '>= 1.6.6'
 # Export Excel
 gem 'rubyzip', '>= 1.2.1' , '< 2.0.0'
-# gem 'rubyzip', '< 2.0.0', '>= 1.2.1' 
-# rubyzip (< 2.0.0, >= 1.2.1)
+
+
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
 gem 'faker', '>= 2.10.0'
