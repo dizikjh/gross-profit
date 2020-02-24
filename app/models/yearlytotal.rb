@@ -1,0 +1,2 @@
+class Yearlytotal < ApplicationRecord
+end

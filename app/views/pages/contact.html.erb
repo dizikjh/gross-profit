@@ -1,5 +1,7 @@
-<h1>Gross profit  per year</h1>
-<p>Gross profit = (extax - last buyprice)* quantity -discount</p>
+
+<h1>Gross profit per year & Graphs</h1>
+<p>Compared with before year</p>
+<p>Gross profit = extax - (last buyprice * quantity)</p>
     <%years = ['2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020']
 %>
 <br/>
@@ -14,20 +16,39 @@
     <tr>
       <th>Year</th>
       <th>Gross profit</th>
+      <th>Gap($)</th>
+      <th>Gap(%)</th>
       <th>Show Detail</th>
     </tr>
   </thead>
   <tbody>
-     <% ttotal=Array.new(17) %>
-        <%for  i in 0..16 %>
+     <% ly =years.size-1 %>
+     <% ttotal=Array.new(ly)
+        profit=Array.new(ly)
+        profitp=Array.new(ly) %>
+        <%for  i in 0..ly %>
             <% ttotal[i]=0 %>
             <%@items[i].each do |item|%>
-                <%total = (item.extax_value-item.lastbuyprice)*item.quantity-item.discount %>
+                <%total = item.extax_value-(item.lastbuyprice*item.quantity) %>
                 <% ttotal[i] += total%>
              <%end%>
             <tr>
                 <td><%=years[i]%></td>
-                <td><%=ttotal[i]%></td>
+                <td><%=ttotal[i]%>$</td>
+                <%# compared part %>
+                  <% if i == 0%>
+                    <%profit[i] = 0%>
+                    <%profitp[i] = 0%>
+                  <%else%>
+                    <%profit[i] = ttotal[i]-ttotal[i-1]%>
+                    <% if ttotal[i-1] == 0 || ttotal[i] == 0 %>
+                      <% profitp[i] = "-"%>
+                    <%else%>
+                      <% profitp[i] = ttotal[i]/ttotal[i-1]*100 -100%>
+                    <%end%>
+                  <%end%>
+                <td><%=profit[i]%>$</td>
+                <td><%=profitp[i].to_i.round%>%</td>
                 <td>
 <form method='get' action='/pages/details' >    
     <input type='hidden' name='year' value="<%=years[i]%>">
@@ -39,5 +60,36 @@
   </table>   
 
 <%end%>
+
+<%# chart  %>
+<br/><br/>
+<h2>Gross profit Graphs</h2>
+<br/> 
+<%data = Array.new(years.size)
+for  i in 0..ly
+   data[i] = [years[i] , ttotal[i].to_i]
+end
+%>
+<%= column_chart data, prefix: "$", colors: ["#b00", "#666"],  id: "Profit", width: "600px", height: "400px", xtitle: "Years", ytitle: "Gross profit($)"  %>
+ 
+<br/><br/>
+<h2>Profit of Change Graphs</h2>
+<br/>  
+<%data2 = Array.new(years.size)
+for  i in 0..ly
+   data2[i] = [years[i] , profit[i].to_i]
+end
+%>    
+<%= line_chart data2, prefix: "$",colors: ["#0a3", "#000"],precision: 100, id: "Profit2", width: "600px", height: "400px", xtitle: "Years", ytitle: "Profit Rate of Change " %>
+
+<br/><br/>
+<h2> Profit Percent Rate of Change Graphs</h2>
+<br/> 
+<%data3 = Array.new(years.size)
+for  i in 0..ly
+   data3[i] = [years[i] , profitp[i].to_i]
+end
+%>
+<%= area_chart data3, suffix: "%",id: "Profit3", width: "600px", height: "400px", xtitle: "Years", ytitle: "Percent Rate of Change" %>
 
 

@@ -1,0 +1,27 @@
+<h1><%= @years%> Monthly extax graphs</h1>
+
+<%=
+  link_to 'Back',
+  pages_home_path 
+%>
+<br/>
+<%=@datat%><br/>
+<%=@dataex%><br/>
+<%=@dataexp%><br/>
+
+<h2> Extax Graph</h2>
+<br/>  
+<%= column_chart @datat, prefix: "$", colors: ["#b00", "#666"],  id: "Extax", width: "600px", height: "400px", xtitle: "Months", ytitle: "Extax($)"  %> 
+<br/><br/>
+
+<h2>Profit of Change Graphs</h2>
+<br/>  
+    
+<%= line_chart @dataex, prefix: "$",colors: ["#0a3", "#000"],precision: 100, id: "Extax2", width: "600px", height: "400px", xtitle: "Months", ytitle: "Gap of Extax " %>
+<br/><br/>
+
+<h2> Profit Percent Rate of Change Graphs</h2>
+<br/>
+<%= area_chart @dataexp, suffix: "%",id: "Extax3", width: "600px", height: "400px", xtitle: "Months", ytitle: "Percent Rate of Extax" %>
+                
+ 

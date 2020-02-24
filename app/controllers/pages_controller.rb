@@ -92,4 +92,34 @@ class PagesController < ApplicationController
       j +=1
     end  
   end 
+
+  def graph
+    months =['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec']
+    years = ['2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020']
+
+    extax = params[:extax]
+    extaxp = params[:extaxp]
+    total = params[:total]
+    yearnum = params[:year]
+    @years = years[yearnum.to_i]
+
+      # for  i in 0..11
+      #   @data[i] = [ 1, @extax[i]]
+      # end
+      @datat = Array.new(months.size)
+      for  i in 0..months.size-1
+        @datat[i] = [ months[i] ,  total[i.to_s].to_i.round  ]
+      end
+
+      @dataex = Array.new(months.size)
+      for  i in 0..months.size-1
+        @dataex[i] = [ months[i] ,  extax[i.to_s].to_i.round ]
+      end
+
+      @dataexp = Array.new(months.size)
+      for  i in 0..months.size-1
+        @dataexp[i] = [ months[i] ,  extaxp[i.to_s].to_i.round ]
+      end
+  end
+
 end

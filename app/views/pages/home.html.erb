@@ -1,71 +1,121 @@
 <h1>Monthly total view of extax</h1>
-<p>choose your Year and Month</p>
+<p>Compared with before month</p>
+<p>If you want to see detail of month, choose Year and Month</p>
 <%=
   link_to 'Back',
   items_path 
 %>
 <br/>
 <% months =['01','02','03','04','05','06','07','08','09','10','11','12']
+   moname =[' ','Jan','Feb','Mar','Apil','May','Jun','July','Aug','Sep','Oct','Nov','Dec']
    years = ['2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020']%>
-<form method='get' action='/pages/about' >    
-<div class="custom-select" style="width:200px;">
-  <select name='month' >
-   <% months.each do |i| %>
-    <option value="<%=i%>"><%=i%></option>
-    <% end %>
-   </select>
-
-    <select name='year'>
-    <% years.each do |i| %>
-    <option value="<%=i%>"><%=i%></option>
-    <% end %>
-   </select>
-</div>
-    <input type='submit'>
-</form>
-
 
 <% ly =years.size-1 %>
 <% lm = months.size-1 %>
+<%# 2demtion array  %>
+<% total = Array.new(years.size) {Array.new(months.size){0}}  
+extax = Array.new(years.size) {Array.new(months.size){0}}
+extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
+
+<table style="text-align: left">
+  <thead>
+    <tr>
+      <th >Show each month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        <form method='get' action='/pages/about' >    
+        <div class="custom-select" style="width:200px;">
+          <select name='month' >
+          <% months.each do |i| %>
+            <option value="<%=i%>"><%=i%></option>
+            <% end %>
+          </select>
+
+            <select name='year'>
+            <% years.each do |i| %>
+            <option value="<%=i%>"><%=i%></option>
+            <% end %>
+          </select>
+        </div>
+            <input type='submit'>
+        </form>
+      </th>
+    </tr>
+  </tbody> 
+</table>   
+
 <table border='1'>
   <thead>
     <tr>
-      <th>    </th>
-      <th>Jan</th>
-      <th>Feb</th>
-      <th>Mar</th>
-      <th>Apil</th>
-      <th>May</th>
-      <th>Jun</th>
-      <th>July</th>
-      <th>Aug</th>
-      <th>Sep</th>
-      <th>Oct</th>
-      <th>Nov</th>
-      <th>Dec</th>
+      <% moname.each do |mn|%>
+      <th><%=mn%></th>
+      <%end%>
+      <th>Graphes</th>
     </tr>
   </thead>
   <tbody>
 <% for y in 0..ly%>
   <tr>
-  <td><%=years[y]%></td>
-  <% for m in 0..lm%>
-    <%total=0%>
-    <%@items[y][m].each do |item|%>
-       <% total += item.extax_value %>       
-    <%end%>
+    <th><%=years[y]%></th>
+      <% for m in 0..lm%>
+        <%total[y][m].to_i%>
+          <%@items[y][m].each do |item|%>
+            <% total[y][m] = total[y][m] + item.extax_value %>       
+          <%end%>
+    <td><%=total[y][m]%>$</td>
+      <%m +=1%>
+      <% end%>
+    <td></td>
+  </tr>
+  <%# Comparing amount %>
+  <tr>
+    <th>Gap($)<br/>Gap(%)</th>
+        <%# declare the form mathod for graph %>
+        <form method='get' action='/pages/graph' > 
+        <div class="custom-select" style="width:200px;">
+      <% for m in 0..lm%>
+        <% if m != 0 %>
+          <% extax[y][m] = total[y][m] - total[y][m-1]  %>
+          <% if total[y][m] == 0 || total[y][m-1] == 0 %>
+            <% extaxp[y][m] = "-"%>
+          <%else%>
+            <% extaxp[y][m] = total[y][m]/total[y][m-1]*100 -100  %>
+          <%end%>
+        <%elsif y == 0%>
+          <% extax[y][m] = 0 %>
+          <% extaxp[y][m] = 0 %>
+        <%else%>
+          <% extax[y][m] = total[y][m] - total[y-1][lm] %>
+          <% if total[y][m] == 0 || total[y][m-1] == 0 %>
+            <% extaxp[y][m] = "-"%>
+          <%else%>
+            <% extaxp[y][m] = total[y][m]/total[y-1][lm]*100 -100 %>
+          <%end%>
+        <%end%>
+      <td><%=extax[y][m]%>$<br/><%=extaxp[y][m].to_i.round%>%</td>
 
-  <td><%=total%></td>
-  
-  <%m +=1%>
-  <% end%>
+         <%# input data form to graph %>
+         <input type ="hidden" name= "total[<%=m %>]" value =<%= total[y][m] %>> 
+         <input type ="hidden" name= "extax[<%=m %>]" value =<%= extax[y][m] %>>
+         <input type ="hidden" name= "extaxp[<%=m %>]" value =<%= extaxp[y][m] %>>
+        <%m +=1%>
+      <% end%>
+      <%# submit button %>
+          <input type ="hidden" name= "year" value = "<%=y%>">
+      <td></div> <button type='submit'>Click</button> </form> </td>
+  </tr>
+  <%# gap of table %>
+  <tr>
+      <% moname.each do |mn|%>
+      <th><%=mn%></th>
+      <%end%>
+      <th>Graphes</th>
   </tr>
 <%y +=1%>
 <% end%>
 
   </tbody> 
 </table>   
-
-
-                
- 

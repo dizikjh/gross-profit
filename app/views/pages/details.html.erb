@@ -10,7 +10,7 @@
    <% ttotal = 0%><% ttoex = 0%><% ttolast = 0%><% ttoquan = 0%><% ttodis = 0%>
    <%for i in 0..11%>
       <%@items[i].each do |item|%>
-        <%total = (item.extax_value-item.lastbuyprice)*item.quantity-item.discount  %>
+        <%total = item.extax_value-(item.lastbuyprice*item.quantity)  %>
         <% toex = item.extax_value %>
         <% tolast = item.lastbuyprice %>
         <% toquan = item.quantity %>
@@ -22,11 +22,11 @@
         <% ttodis += todis%>
       <%end%>
     <%end%>
-    <p>Gross profit : <%=ttotal%></p>
-    <p>Total extax : <%=ttoex%></p>
-    <p>Total last buy price: <%=ttolast%></p>
+    <p>Gross profit : <%=ttotal%>$</p>
+    <p>Total extax : <%=ttoex%>$</p>
+    <p>Total last buy price: <%=ttolast%>$</p>
     <p>Total quantity : <%=ttoquan%></p>
-    <p>Total discount : <%=ttodis%></p>
+    <p>Total discount : <%=ttodis%>$</p>
 <%else %>
  <%="There is NO Data in this year"%> 
 

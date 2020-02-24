@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get '/pages/about' => 'pages#about'
   get '/pages/contact' => 'pages#contact'
   get '/pages/details' => 'pages#details'
+  get '/pages/graph' => 'pages#graph'
+  
   resources :items do
     collection do
       get "destroy_all"
