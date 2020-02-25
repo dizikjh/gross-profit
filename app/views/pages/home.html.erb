@@ -1,3 +1,4 @@
+
 <h1>Monthly total view of extax</h1>
 <p>Compared with before month</p>
 <p>If you want to see detail of month, choose Year and Month</p>
@@ -27,19 +28,19 @@ extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
     <tr>
       <th>
         <form method='get' action='/pages/about' >    
-        <div class="custom-select" style="width:200px;">
-          <select name='month' >
-          <% months.each do |i| %>
-            <option value="<%=i%>"><%=i%></option>
-            <% end %>
-          </select>
+          <div class="custom-select" style="width:200px;">
+            <select name='month' >
+              <% months.each do |i| %>
+                <option value="<%=i%>"><%=i%></option>
+                <% end %>
+            </select>
 
             <select name='year'>
-            <% years.each do |i| %>
-            <option value="<%=i%>"><%=i%></option>
-            <% end %>
-          </select>
-        </div>
+              <% years.each do |i| %>
+              <option value="<%=i%>"><%=i%></option>
+              <% end %>
+            </select>
+          </div>
             <input type='submit'>
         </form>
       </th>
@@ -51,9 +52,9 @@ extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
   <thead>
     <tr>
       <% moname.each do |mn|%>
-      <th><%=mn%></th>
+        <th><%=mn%></th>
       <%end%>
-      <th>Graphes</th>
+        <th>Graphes</th>
     </tr>
   </thead>
   <tbody>
@@ -74,8 +75,7 @@ extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
   <tr>
     <th>Gap($)<br/>Gap(%)</th>
         <%# declare the form mathod for graph %>
-        <form method='get' action='/pages/graph' > 
-        <div class="custom-select" style="width:200px;">
+        <form method="get" action="/pages/graph" >
       <% for m in 0..lm%>
         <% if m != 0 %>
           <% extax[y][m] = total[y][m] - total[y][m-1]  %>
@@ -96,7 +96,6 @@ extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
           <%end%>
         <%end%>
       <td><%=extax[y][m]%>$<br/><%=extaxp[y][m].to_i.round%>%</td>
-
          <%# input data form to graph %>
          <input type ="hidden" name= "total[<%=m %>]" value =<%= total[y][m] %>> 
          <input type ="hidden" name= "extax[<%=m %>]" value =<%= extax[y][m] %>>
@@ -105,7 +104,7 @@ extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
       <% end%>
       <%# submit button %>
           <input type ="hidden" name= "year" value = "<%=y%>">
-      <td></div> <button type='submit'>Click</button> </form> </td>
+      <td> <button type="submit">Click</button> </form> </td>
   </tr>
   <%# gap of table %>
   <tr>
@@ -114,8 +113,8 @@ extaxp = Array.new(years.size) {Array.new(months.size){0}}%>
       <%end%>
       <th>Graphes</th>
   </tr>
-<%y +=1%>
-<% end%>
+  <%y +=1%>
+  <% end%>
 
   </tbody> 
 </table>   

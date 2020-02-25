@@ -85,6 +85,8 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       params.require(:item).permit(:apncode, :description, :author, :pcategory, :doc_num, :ref_num, :rrp, :lastbuyprice, :extax_value, :tax, :discount, :stock, :quantity, :date, :time)
+
+      # params.require(:item).permit("APN code" =>:apncode, "R.R.P." =>:rrp, "Last Buy Price" =>:lastbuyprice, "Item description" =>:description, "Author" =>:author, "Product Category" =>:pcategory,  "Actual Stock On Hand" =>:stock, "Trans Date" =>:date, "Trans Time" => :time , "Trans Document Number" =>:doc_num, "Trans Reference Number" =>:ref_num, "Trans Quantity" =>:quantity, "Trans Total extax value" =>:extax_value, "Trans Total tax" =>:tax, "Trans Total discount given" =>:discount)
     end
 
 end

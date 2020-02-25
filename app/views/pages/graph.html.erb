@@ -1,13 +1,12 @@
 <h1><%= @years%> Monthly extax graphs</h1>
 
 <%=
-  link_to 'Back',
-  pages_home_path 
+  # link_to 'Back', :back
+  link_to 'Back','javascript:history.back()'
+  # link_to_function "Back", "history.back()"
 %>
+
 <br/>
-<%=@datat%><br/>
-<%=@dataex%><br/>
-<%=@dataexp%><br/>
 
 <h2> Extax Graph</h2>
 <br/>  
