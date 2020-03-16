@@ -45,8 +45,8 @@ class PagesController < ApplicationController
     @year = params[:year]
     j=0
     months.each do |i|
-      a_variable = i
-      case a_variable # a_variable is the variable we want to compare
+      # a_variable = i
+      case i # a_variable is the variable we want to compare
       when '01','03','05','07','08','10','12'    #compare to 1
         @items[j] = Item.where("date >= ? and date <= ?", params[:year]+"-"+i+"-01", params[:year]+"-"+i+"-31" )
       when '04','06','09','11'    #compare to 2
@@ -73,8 +73,8 @@ class PagesController < ApplicationController
     years.each do |i|
       l=0
       months.each do |k|
-        a_variable = k
-        case a_variable # a_variable is the variable we want to compare
+        # a_variable = k
+        case k # a_variable is the variable we want to compare
         when '01','03','05','07','08','10','12'    #compare to 1
           @items[j][l] = Item.where("date >= ? and date <= ?", i +"-"+k+"-01", i +"-"+k+"-31" )
         when '04','06','09','11'    #compare to 2
